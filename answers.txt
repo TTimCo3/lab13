@@ -1,0 +1,18 @@
+1. Yes there appears to be a fault. The fault is that the program starts from index 1 then iterates normally, this is done in the for loops condition "int i = 1".
+    The issue is that since it starts at 1 it will not be able to check the first index, as that is accessed at 0. This will make it so that if the 1st element is 0,
+    the program will be unable to determine that and may pass a student who has exactly 3 lectures missed, but one of them being the first that can't be read.
+
+2. A test case that does not execute the fault is impossible, this is because each record is 10 values, so there will always be that first index that is skipped over
+    by the function.
+
+3. A test case that result in the error state but without a failure is {1,1,1,1,1,1,1,1,1,1}. This is because the fault will execute and skip the first index, but since the index is 1,
+    absent_count would not have been incremented anyways. Therefore there is no resulting error state from this test case.
+
+4. A test case that result in the error state but without a failure is {0,1,1,1,1,1,1,1,1,1}. This test case is expected to return false, that is because there are not
+    three or more missed lectures. The fault is however executed, because the first index is still skipped and the zero is not counted to absent_count. Because it's not counted
+    to absent_count that means this test case puts the program in an error state where absent_count is not tracking the record properly, however the expected output will still match
+    the actual output, that being false, and therefore it does not result in failure.
+
+5. A test case that results in failure is {0,0,0,1,1,1,1,1,1,1}. This is because the first index is not counted due to the fault being executed, this leads to absent_count not tracking
+    it properly which is the error state, and because of that when it comes time to evaluate whether there are 3 or more missed lectures, absent_count wrongly showcases 2, then false is returned
+    despite true being the expected output of the function. This is a failure.
